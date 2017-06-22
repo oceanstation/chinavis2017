@@ -1,0 +1,11 @@
+chinavis2017.iml
+src
+lib
+out
+node_modules
+.DS_Store
+.idea
+web/npm-debug.log
+web/src/default.html
+web/dist
+web/WEB-INF
