@@ -1,0 +1,17 @@
+<div id="container"></div><!-- 高德地图 -->
+<div id="time">
+    <select ng-model="selectedType" ng-options="item for item in types"></select>
+    <input class="timeInput" ng-model="currentTime">
+    <span ng-click="stop(flag)" class="btn mouse">{{flag || 'Start'}}</span>
+    <p ng-bind="timeRange"></p>
+</div>
+<div id="legendPhone"></div>
+<div id="legendType"></div>
+<div id="content" ng-if="show">
+    <p ng-click="close()" class="mouse">Close </p>
+    <p class="item" ng-repeat="item in records">
+        <span ng-style="{'color':'{{(colorMap[item.type]).color}}'}">{{item.num}}</span>
+        <span ng-style="{'color':'{{(colorMap[item.type]).color}}'}">{{item.content}}</span>
+    </p>
+</div>
+<div id="area-stack"></div><!-- 底部折线图 -->

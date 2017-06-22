@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-ui-router": "^1.0.3",
+    "echarts": "^3.6.1",
+    "event-drops": "^0.3.0-alpha2",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {}
+}

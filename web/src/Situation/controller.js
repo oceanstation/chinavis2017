@@ -1,0 +1,518 @@
+angular.module('chinavis')
+    .controller('situationController', ['$scope', 'colorMap', 'visService', '$interval', '$filter', function ($scope, colorMap, visService, $interval, $filter) {
+        $scope.colorMap = colorMap;// 分类及对应颜色
+        $scope.types = ['所有分类'];// 所有分类
+        $scope.colorMap.map(function (item) {
+            $scope.types.push(item.name);
+        });
+        $scope.selectedType = $scope.types[0];// 当前所选分类
+        $scope.viewTime = '';// 当前数据所属时间
+        $scope.currentTime = '2017-02-23 00:00:00';// 起始时间
+        $scope.startTime = new Date($scope.currentTime).valueOf();// 转化为时间戳
+        $scope.timeRange = '';
+
+        $scope.show = false;// 是否显示短信内容
+        $scope.close = function () {
+            $scope.show = false;
+        };// 关闭短信内容
+        $scope.records = [];// 短信内容
+
+        // 创建地图
+        var map = new AMap.Map('container', {
+            mapStyle: 'amap://styles/grey',
+            zoom: 11,
+            center: [116.366576, 39.921797]
+        });
+
+        map.setFeatures(['road', 'bg']);// 多个种类要素显示
+
+        AMapUI.load(['ui/misc/PointSimplifier', 'lib/utils', 'lib/$'], function (PointSimplifier, utils, $) {
+
+            if (!PointSimplifier.supportCanvas) {
+                alert('当前环境不支持 Canvas！');
+                return;
+            }
+
+            /**
+             * 自定义绘制引擎
+             * @param {PointSimplifier} pointSimplifierIns 关联的PointSimplifier实例
+             * @param {Object} opts   配置
+             */
+            function MyCanvasRender(pointSimplifierIns, opts) {
+                // 直接调用父类的构造函数
+                MyCanvasRender.__super__.constructor.apply(this, arguments);
+            }
+
+            // 继承自默认的Canvas引擎（http://webapi.amap.com/ui/1.0/ui/misc/PointSimplifier/render/canvas.js）
+            utils.inherit(MyCanvasRender, PointSimplifier.Render.Canvas);
+
+            utils.extend(MyCanvasRender.prototype, {
+                /**
+                 * 重新实现点的绘制方法
+                 * @param  {number} zoom       当前的地图级别
+                 * @param  {Array} activePoints 可以正常绘制的点
+                 * @param  {Array} shadowPoints 空间被占用的点
+                 */
+                renderNormalPoints: function (zoom, activePoints, shadowPoints) {
+                    // 先按默认逻辑处理shadowPoints
+                    MyCanvasRender.__super__.renderNormalPoints.call(this, zoom, null, shadowPoints);
+
+                    var pointStyle = this.getOption('pointStyle'),
+                        getPointsGroupKey = this.getOption('getPointsGroupKey'),
+                        pointStyleGroup = this.getOption('pointStyleGroup'),
+                        pointSimplifierIns = this.getPointSimplifierInstance(),
+                        groups = {};
+
+                    // 按key分组
+                    for (var i = 0, len = activePoints.length; i < len; i++) {
+
+                        var point = activePoints[i],
+                            dataIndex = point.idx,
+                            dataItem = pointSimplifierIns.getDataItemByIndex(dataIndex);
+
+                        var key = getPointsGroupKey.call(this, dataItem, dataIndex);
+
+                        if (!groups[key]) {
+                            groups[key] = [];
+                        }
+
+                        groups[key].push(activePoints[i]);
+                    }
+
+                    // 分组绘制
+                    for (var k in groups) {
+
+                        // 继承pointStyle中的默认属性
+                        var styleOptions = utils.extend({}, pointStyle, pointStyleGroup[k]);
+
+                        // 调用父类的绘制函数
+                        this.drawPointsWithStyleOptions(groups[k], styleOptions);
+                    }
+                }
+            });
+
+            var pointSimplifierIns = new PointSimplifier({
+                map: map, // 所属的地图实例
+
+                getPosition: function (item) {
+
+                    if (!item) {
+                        return null;
+                    }
+
+                    // 返回经纬度
+                    return [parseFloat(item.lng), parseFloat(item.lat)];
+                },
+                getHoverTitle: function (dataItem) {
+                    return dataItem.content;
+                },
+                autoSetFitView: false,
+                // 赋值为 MyCanvasRender
+                renderConstructor: MyCanvasRender,
+                renderOptions: {
+                    // 点的样式
+                    pointStyle: {
+                        width: 5,
+                        height: 5,
+                        fillStyle: '#d939bd'
+                    },
+                    // 鼠标hover时的title信息
+                    hoverTitleStyle: {
+                        position: 'top'
+                    },
+                    getPointsGroupKey: function (dataItem) {
+                        // 这里直接按索引取余，仅作示意
+                        return 'g' + dataItem.type;
+                    },
+                    // 分组配置
+                    pointStyleGroup: {
+                        'g0': {
+                            fillStyle: colorMap[0].color
+                        },
+                        'g1': {
+                            fillStyle: colorMap[1].color
+                        },
+                        'g2': {
+                            fillStyle: colorMap[2].color
+                        },
+                        'g3': {
+                            fillStyle: colorMap[3].color
+                        },
+                        'g4': {
+                            fillStyle: colorMap[4].color
+                        },
+                        'g5': {
+                            fillStyle: colorMap[5].color
+                        },
+                        'g6': {
+                            fillStyle: colorMap[6].color
+                        },
+                        'g7': {
+                            fillStyle: colorMap[7].color
+                        },
+                        'g8': {
+                            fillStyle: colorMap[8].color
+                        },
+                        'g9': {
+                            fillStyle: colorMap[9].color
+                        },
+                        'g10': {
+                            fillStyle: colorMap[10].color
+                        },
+                        'g11': {
+                            fillStyle: colorMap[11].color
+                        },
+                        'g12': {
+                            fillStyle: colorMap[12].color
+                        }
+                    }
+                }
+            });
+
+            pointSimplifierIns.on('pointClick', function (e, record) {
+                console.log(e.type, record.data.recitime);
+            });
+
+            // 用echarts绘制左上legendType
+            var legendType = echarts.init(document.getElementById("legendType"));
+            legendType.setOption({
+                grid: {
+                    left: 5,
+                    right: 30,
+                    top: 10,
+                    bottom: 0,
+                    containLabel: true
+                },
+                xAxis: {
+                    show: false
+                },
+                yAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    axisLabel: {
+                        textStyle: {
+                            color: function () {
+                                return (colorMap[0]).color
+                            }
+                        }
+                    },
+                    data: colorMap.map(function (d) {
+                        return d.name;
+                    })
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        barMaxWidth: 20,
+                        itemStyle: {
+                            normal: {
+                                color: function (params) {
+                                    return (colorMap[params.dataIndex]).color
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'right'
+                            }
+                        },
+                        data: []
+                    }
+                ]
+            });
+
+            // 用echarts绘制左上legendPhone
+            var legendPhone = echarts.init(document.getElementById("legendPhone"));
+            legendPhone.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{c} ({d}%)"
+                },
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+
+            // 用echart绘制下方时间线
+            var areaStack = echarts.init(document.getElementById("area-stack"));
+            $scope.areas = [];
+            areaStack.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        animation: false
+                    }
+                },
+                grid: {//设置图与边缘的距离
+                    left: 0,
+                    right: 35,
+                    bottom: 5,
+                    containLabel: true
+                },
+                dataZoom: [{
+                    show: false,
+                    realtime: true,
+                    start: 0,
+                    end: 100
+                }, {
+                    type: 'inside'
+                }],
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    nameLocation: 'middle',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#aaaaaa'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#aaaaaa'
+                        }
+                    },
+                    axisTick: {
+                        lineStyle: {
+                            color: '#aaaaaa'
+                        }
+                    },
+                    data: $scope.areas.map(function (item) {
+                        return item.time;
+                    })
+                },
+                yAxis: {
+                    show: false
+                },
+                series: [{
+                    name: 'num',
+                    type: 'line',
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: '#aaaaaa'
+                        }
+                    },
+                    symbolSize: 3,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    data: $scope.areas.map(function (item) {
+                        return item.num;
+                    })
+                }]
+            });
+            legendPhone.on('click', function (params) {
+                if (params.componentType === 'series') {
+                    if (params.seriesType === 'pie') {
+                        var params = {
+                            startTime: $scope.viewTime,
+                            endTime: $scope.viewTime + 1800000,
+                            type: $scope.types.indexOf($scope.selectedType) - 1,
+                            phone: params.name
+                        };
+                        visService.getData('/api/content.action', params).then(
+                            function (data) {
+                                $scope.records = data;
+                                $scope.show = true;
+                            },
+                            function (error) {
+                                $scope.error = error;
+                            });
+                    }
+                }
+            });
+            legendType.on('click', function (params) {
+                if (params.componentType === 'series') {
+                    if (params.seriesType === 'bar') {
+                        var type = -1;
+                        colorMap.map(function (d, i) {
+                            if (d.name == params.name) type = i;
+                        });
+
+                        var params = {
+                            startTime: $scope.viewTime,
+                            endTime: $scope.viewTime + 1800000,
+                            type: type
+                        };
+                        visService.getData('/api/content.action', params).then(
+                            function (data) {
+                                $scope.records = data;
+                                $scope.show = true;
+                            },
+                            function (error) {
+                                $scope.error = error;
+                            });
+                    }
+                }
+            });
+            areaStack.on('click', function (params) {
+                if (params.componentType === 'series') {
+                    if (params.seriesType === 'line') {
+                        if (params.dataType === 'edge') {
+                            // 点击到了 graph 的 edge（边）上
+                        }
+                        else {
+                            // 点击到了 graph 的 node（节点）上
+                            var time = new Date("2017-02-" + params.name.substring(0, 2) + " " + params.name.substring(3, 8) + ":00");
+
+                            // 重置content数据
+                            $scope.viewTime = time.getTime() - 1800000;
+                            $scope.show = false;
+                            $scope.records = [];
+
+                            var params = {
+                                startTime: time.getTime() - 1800000,
+                                endTime: time.getTime(),
+                                type: $scope.types.indexOf($scope.selectedType) - 1
+                            };
+                            visService.getData('/api/position.action', params).then(
+                                function (data) {
+                                    // 更新地图数据
+                                    pointSimplifierIns.setData(data.maps);
+
+                                    // 更新时间
+                                    $scope.timeRange = '当前时间：' + $filter('date')(data.area.stime, 'yyyy年M月d日')
+                                        + $filter('date')(data.area.stime, ' HH:mm ')
+                                        + "至" + $filter('date')(data.area.etime, ' HH:mm');
+
+                                    // 更新左上legendType数据
+                                    legendType.setOption({
+                                        series: [{
+                                            data: data.bars
+                                        }]
+                                    });
+                                    // 更新左上legendPhone数据
+                                    legendPhone.setOption({
+                                        series: [
+                                            {
+                                                data: data.phone
+                                            }
+                                        ]
+                                    });
+                                },
+                                function (error) {
+                                    $scope.error = error;
+                                });
+                        }
+                    }
+                }
+            });
+
+            $scope.start = function () {
+                $scope.intervalEvent = $interval(function () {
+                    // 自定义时间
+                    if ($scope.startTime !== new Date($scope.currentTime).valueOf()) {
+                        $scope.startTime = new Date($scope.currentTime).valueOf();
+                        // 清除下方时间线数据
+                        $scope.areas = [];
+                        areaStack.setOption({
+                            xAxis: {
+                                data: $scope.areas.map(function (item) {
+                                    return $filter('date')(item.etime, 'd日HH:mm');
+                                })
+                            },
+                            series: [{
+                                data: $scope.areas.map(function (item) {
+                                    return item.num;
+                                })
+                            }]
+                        });
+                    }
+
+                    var params = {
+                        startTime: $scope.startTime,
+                        endTime: $scope.startTime + 1800000,
+                        type: $scope.types.indexOf($scope.selectedType) - 1
+                    };
+                    visService.getData('/api/position.action', params).then(
+                        function (data) {
+                            // 更新地图数据
+                            pointSimplifierIns.setData(data.maps);
+
+                            // 更新时间
+                            $scope.timeRange = '当前时间：' + $filter('date')(data.area.stime, 'yyyy年M月d日')
+                                + $filter('date')(data.area.stime, 'HH:mm')
+                                + "至" + $filter('date')(data.area.etime, 'HH:mm');
+
+                            // 更新左上legendType数据
+                            legendType.setOption({
+                                series: [{
+                                    data: data.bars
+                                }]
+                            });
+                            // 更新左上legendPhone数据
+                            legendPhone.setOption({
+                                series: [
+                                    {
+                                        data: data.phone
+                                    }
+                                ]
+                            });
+
+                            // 更新下方时间线数据
+                            $scope.areas.push(data.area);
+                            // if ($scope.areas.length > 24) $scope.areas.shift();
+                            areaStack.setOption({
+                                xAxis: {
+                                    data: $scope.areas.map(function (item) {
+                                        return $filter('date')(item.etime, 'd日HH:mm');
+                                    })
+                                },
+                                series: [{
+                                    data: $scope.areas.map(function (item) {
+                                        return item.num;
+                                    })
+                                }]
+                            });
+                        },
+                        function (error) {
+                            $scope.error = error;
+                        });
+
+                    // 重置content数据
+                    $scope.viewTime = $scope.startTime;
+                    $scope.show = false;
+                    $scope.records = [];
+
+                    $scope.startTime += 1800000;
+                    $scope.currentTime = $filter('date')($scope.startTime, 'yyyy-MM-dd HH:mm:ss');
+
+                }, 10000);
+            };
+
+            $scope.flag = '';
+            $scope.stop = function (flag) {
+                if (flag == 'Pause') {
+                    $interval.cancel($scope.intervalEvent);
+                    $scope.flag = 'Start';
+                } else {
+                    $scope.start($scope.startTime);
+                    $scope.flag = 'Pause';
+
+                    // 重置content数据
+                    $scope.show = false;
+                    $scope.records = [];
+                }
+            };
+        });
+    }]);

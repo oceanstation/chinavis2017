@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta charset="UTF-8">
+    <title>伪基站时空分析</title>
+    <link rel="stylesheet" href="app.min.css">
+    <!--引入高德地图JSAPI -->
+    <script src="//webapi.amap.com/maps?v=1.3&key="></script>
+    <!--引入UI组件库（1.0版本） -->
+    <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+</head>
+<body ng-app="chinavis" ng-cloak>
+<div class="nav">
+    <a class="nav-title" ui-sref="situation" ui-sref-active="active">situation</a>
+    <a class="nav-title" ui-sref="analysis" ui-sref-active="active">analysis</a>
+</div>
+<!-- angular路由 -->
+<div ui-view class="my-view"></div>
+
+<!-- 依赖的JS库 -->
+<script src="lib/angular.min.js"></script>
+<script src="lib/angular-ui-router.min.js"></script>
+<script src="lib/angular-animate.min.js"></script>
+<script src="lib/echarts.min.js"></script>
+
+<script src="app.min.js"></script>
+</body>
+</html>

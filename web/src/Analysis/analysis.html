@@ -1,0 +1,28 @@
+<div class="analysis">
+    <span ng-repeat="item in months" ng-click="show($index)"
+          ng-class="item.name === currentMonth ? 'btnActive mouse' : 'btn mouse'" ng-bind="item.name"></span>
+    <area-chart ng-if="data0" data="data0"></area-chart>
+    <div ng-if="data0" class="left65">
+        <bar-chart data="data0.hours" type="0"></bar-chart>
+        <bar-chart data="data0.types" type="1"></bar-chart>
+    </div>
+    <div ng-if="data0" class="right35">
+        <pie-chart data="data0.pies"></pie-chart>
+    </div>
+    <area-chart ng-if="data1" data="data1"></area-chart>
+    <div ng-if="data1" class="left65">
+        <bar-chart data="data1.hours" type="0"></bar-chart>
+        <bar-chart data="data1.types" type="1"></bar-chart>
+    </div>
+    <div ng-if="data1" class="right35">
+        <pie-chart data="data1.pies"></pie-chart>
+    </div>
+    <area-chart ng-if="data2" data="data2"></area-chart>
+    <div ng-if="data2" class="left65">
+        <bar-chart data="data2.hours" type="0"></bar-chart>
+        <bar-chart data="data2.types" type="1"></bar-chart>
+    </div>
+    <div ng-if="data2" class="right35">
+        <pie-chart data="data2.pies"></pie-chart>
+    </div>
+</div>
