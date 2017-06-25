@@ -1,6 +1,8 @@
 chinavis2017.iml
 /src
 /lib
+/doc
+/test
 /out
 node_modules
 .DS_Store
