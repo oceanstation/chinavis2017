@@ -317,7 +317,7 @@ angular.module('chinavis')
                             type: $scope.types.indexOf($scope.selectedType) - 1,
                             phone: params.name
                         };
-                        visService.getData('/api/content.action', params).then(
+                        visService.getData('./api/content.action', params).then(
                             function (data) {
                                 $scope.records = data;
                                 $scope.show = true;
@@ -341,7 +341,7 @@ angular.module('chinavis')
                             endTime: $scope.viewTime + 1800000,
                             type: type
                         };
-                        visService.getData('/api/content.action', params).then(
+                        visService.getData('./api/content.action', params).then(
                             function (data) {
                                 $scope.records = data;
                                 $scope.show = true;
@@ -372,7 +372,7 @@ angular.module('chinavis')
                                 endTime: time.getTime(),
                                 type: $scope.types.indexOf($scope.selectedType) - 1
                             };
-                            visService.getData('/api/position.action', params).then(
+                            visService.getData('./api/position.action', params).then(
                                 function (data) {
                                     // 更新地图数据
                                     pointSimplifierIns.setData(data.maps);
@@ -431,7 +431,7 @@ angular.module('chinavis')
                         endTime: parseInt(localStorage.get('startTime')) + 1800000,
                         type: $scope.types.indexOf($scope.selectedType) - 1
                     };
-                    visService.getData('/api/position.action', params).then(
+                    visService.getData('./api/position.action', params).then(
                         function (data) {
                             // 更新地图数据
                             pointSimplifierIns.setData(data.maps);
