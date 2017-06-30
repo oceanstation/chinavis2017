@@ -1,14 +1,15 @@
 angular.module('chinavis')
-    .controller('situationController', ['$scope', 'colorMap', 'visService', '$interval', '$filter', function ($scope, colorMap, visService, $interval, $filter) {
+    .controller('situationController', ['$scope', 'localStorage', 'colorMap', 'visService', '$interval', '$filter', function ($scope, localStorage, colorMap, visService, $interval, $filter) {
         $scope.colorMap = colorMap;// 分类及对应颜色
         $scope.types = ['所有分类'];// 所有分类
         $scope.colorMap.map(function (item) {
             $scope.types.push(item.name);
         });
         $scope.selectedType = $scope.types[0];// 当前所选分类
-        $scope.viewTime = '';// 当前数据所属时间
-        $scope.currentTime = '2017-02-23 00:00:00';// 起始时间
-        $scope.startTime = new Date($scope.currentTime).valueOf();// 转化为时间戳
+
+        $scope.viewTime = '';// 回退时间
+        $scope.currentTime = '2017-02-23 00:00:00';// 当前时间
+        localStorage.set('startTime', new Date($scope.currentTime).valueOf());// 转化为时间戳存储在localStorage
         $scope.timeRange = '';
 
         $scope.show = false;// 是否显示短信内容
@@ -25,19 +26,11 @@ angular.module('chinavis')
         });
 
         map.setFeatures(['road', 'bg']);// 多个种类要素显示
-
         AMapUI.load(['ui/misc/PointSimplifier', 'lib/utils', 'lib/$'], function (PointSimplifier, utils, $) {
-
             if (!PointSimplifier.supportCanvas) {
                 alert('当前环境不支持 Canvas！');
                 return;
             }
-
-            /**
-             * 自定义绘制引擎
-             * @param {PointSimplifier} pointSimplifierIns 关联的PointSimplifier实例
-             * @param {Object} opts   配置
-             */
             function MyCanvasRender(pointSimplifierIns, opts) {
                 // 直接调用父类的构造函数
                 MyCanvasRender.__super__.constructor.apply(this, arguments);
@@ -47,12 +40,6 @@ angular.module('chinavis')
             utils.inherit(MyCanvasRender, PointSimplifier.Render.Canvas);
 
             utils.extend(MyCanvasRender.prototype, {
-                /**
-                 * 重新实现点的绘制方法
-                 * @param  {number} zoom       当前的地图级别
-                 * @param  {Array} activePoints 可以正常绘制的点
-                 * @param  {Array} shadowPoints 空间被占用的点
-                 */
                 renderNormalPoints: function (zoom, activePoints, shadowPoints) {
                     // 先按默认逻辑处理shadowPoints
                     MyCanvasRender.__super__.renderNormalPoints.call(this, zoom, null, shadowPoints);
@@ -256,7 +243,7 @@ angular.module('chinavis')
                         animation: false
                     }
                 },
-                grid: {//设置图与边缘的距离
+                grid: {// 设置图与边缘的距离
                     left: 0,
                     right: 35,
                     bottom: 5,
@@ -421,8 +408,8 @@ angular.module('chinavis')
             $scope.start = function () {
                 $scope.intervalEvent = $interval(function () {
                     // 自定义时间
-                    if ($scope.startTime !== new Date($scope.currentTime).valueOf()) {
-                        $scope.startTime = new Date($scope.currentTime).valueOf();
+                    if (localStorage.get('startTime') != new Date($scope.currentTime).valueOf()) {
+                        localStorage.set('startTime', new Date($scope.currentTime).valueOf());
                         // 清除下方时间线数据
                         $scope.areas = [];
                         areaStack.setOption({
@@ -440,8 +427,8 @@ angular.module('chinavis')
                     }
 
                     var params = {
-                        startTime: $scope.startTime,
-                        endTime: $scope.startTime + 1800000,
+                        startTime: localStorage.get('startTime'),
+                        endTime: parseInt(localStorage.get('startTime')) + 1800000,
                         type: $scope.types.indexOf($scope.selectedType) - 1
                     };
                     visService.getData('/api/position.action', params).then(
@@ -490,12 +477,12 @@ angular.module('chinavis')
                         });
 
                     // 重置content数据
-                    $scope.viewTime = $scope.startTime;
+                    $scope.viewTime = parseInt(localStorage.get('startTime'));
                     $scope.show = false;
                     $scope.records = [];
 
-                    $scope.startTime += 1800000;
-                    $scope.currentTime = $filter('date')($scope.startTime, 'yyyy-MM-dd HH:mm:ss');
+                    localStorage.set('startTime', parseInt(localStorage.get('startTime')) + 1800000);
+                    $scope.currentTime = $filter('date')(localStorage.get('startTime'), 'yyyy-MM-dd HH:mm:ss');
 
                 }, 10000);
             };
@@ -506,7 +493,7 @@ angular.module('chinavis')
                     $interval.cancel($scope.intervalEvent);
                     $scope.flag = 'Start';
                 } else {
-                    $scope.start($scope.startTime);
+                    $scope.start(localStorage.get('startTime'));
                     $scope.flag = 'Pause';
 
                     // 重置content数据
