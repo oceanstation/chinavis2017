@@ -53,6 +53,6 @@
         │   └── test/
         └── etc
 ## 系统截图
-![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/web/src/data/Preview_0.png)
+![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_0.png)
 
-![Preview_1](https://github.com/oceanstation/chinavis2017/blob/master/web/src/data/Preview_1.png)
+![Preview_1](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_1.png)

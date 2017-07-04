@@ -1,7 +1,6 @@
 chinavis2017.iml
 .DS_Store
 .idea
-/doc
 /target
 /src/main/webapp/node_modules
 /src/main/webapp/npm-debug.log
