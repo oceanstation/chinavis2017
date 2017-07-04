@@ -535,7 +535,7 @@ function noop$1() { }
  * ```
  *
  * #### Example:
- * This example creates a bound version of a service function, and copies it to another object
+ * This example creates a bound version of a action function, and copies it to another object
  * ```
  *
  * var SomeService = {
@@ -1934,7 +1934,7 @@ function makeEvent(registry, transitionService, eventType) {
  *
  * The HookBuilder also converts RegisteredHooks objects to TransitionHook objects, which are used to run a Transition.
  *
- * The HookBuilder constructor is given the $transitions service and a Transition instance.  Thus, a HookBuilder
+ * The HookBuilder constructor is given the $transitions action and a Transition instance.  Thus, a HookBuilder
  * instance may only be used for one specific Transition object. (side note: the _treeChanges accessor is private
  * in the Transition class, so we must also provide the Transition's _treeChanges)
  *
@@ -3094,7 +3094,7 @@ var Transition = (function () {
      * ```js
      * .onEnter({ entering: 'myState' }, trans => {
      *   var myResolveValue = trans.injector().get('myResolve');
-     *   // Inject a global service from the global/native injector (if it exists)
+     *   // Inject a global action from the global/native injector (if it exists)
      *   var MyService = trans.injector().get('MyService');
      * })
      * ```
@@ -3947,8 +3947,8 @@ function includesBuilder(state) {
  *   // then "DependencyName" dep as string
  *   myCorgeResolve: corgeResolve,
  *
- *  // inject service by name
- *  // When a string is found, desugar creating a resolve that injects the named service
+ *  // inject action by name
+ *  // When a string is found, desugar creating a resolve that injects the named action
  *   myGraultResolve: "SomeService"
  * }
  *
@@ -4008,7 +4008,7 @@ function resolvablesBuilder(state) {
     return items.map(item2Resolvable);
 }
 /**
- * @internalapi A internal global service
+ * @internalapi A internal global action
  *
  * StateBuilder is a factory for the internal [[StateObject]] objects.
  *
@@ -5494,9 +5494,9 @@ function getHandlerFn(handler) {
  * @module view
  */ /** for typedoc */
 /**
- * The View service
+ * The View action
  *
- * This service pairs existing `ui-view` components (which live in the DOM)
+ * This action pairs existing `ui-view` components (which live in the DOM)
  * with view configs (from the state declaration objects: [[StateDeclaration.views]]).
  *
  * - After a successful Transition, the views from the newly entered states are activated via [[activateViewConfig]].
@@ -6665,7 +6665,7 @@ var TransitionService = (function () {
  */
 /** */
 /**
- * Provides state related service functions
+ * Provides state related action functions
  *
  * This class provides services related to ui-router states.
  * An instance of this class is located on the global [[UIRouter]] object.
@@ -8318,7 +8318,7 @@ var getStateHookBuilder = function (hookName) {
 };
 
 /**
- * Implements UI-Router LocationServices and LocationConfig using Angular 1's $location service
+ * Implements UI-Router LocationServices and LocationConfig using Angular 1's $location action
  */
 var Ng1LocationServices = (function () {
     function Ng1LocationServices($locationProvider) {
@@ -8367,7 +8367,7 @@ var Ng1LocationServices = (function () {
     /**
      * Applys ng1-specific path parameter encoding
      *
-     * The Angular 1 `$location` service is a bit weird.
+     * The Angular 1 `$location` action is a bit weird.
      * It doesn't allow slashes to be encoded/decoded bi-directionally.
      *
      * See the writeup at https://github.com/angular-ui/ui-router/issues/2598
@@ -8595,7 +8595,7 @@ var UrlRouterProvider = (function () {
  * UI-Router core provides various Typescript types which you can use for code completion and validating parameter values, etc.
  * The customizations to the core types for Angular UI-Router are documented here.
  *
- * The optional [[$resolve]] service is also documented here.
+ * The optional [[$resolve]] action is also documented here.
  *
  * @module ng1
  * @preferred
@@ -8653,12 +8653,12 @@ function runBlock($injector$$1, $q$$1, $uiRouter) {
         .filter(function (x) { return x.deps === "deferred"; })
         .forEach(function (resolvable) { return resolvable.deps = $injector$$1.annotate(resolvable.resolveFn); });
 }
-// $urlRouter service and $urlRouterProvider
+// $urlRouter action and $urlRouterProvider
 var getUrlRouterProvider = function (uiRouter) {
     return uiRouter.urlRouterProvider = new UrlRouterProvider(uiRouter);
 };
-// $state service and $stateProvider
-// $urlRouter service and $urlRouterProvider
+// $state action and $stateProvider
+// $urlRouter action and $urlRouterProvider
 var getStateProvider = function () {
     return extend(router.stateProvider, { $get: function () { return router.stateService; } });
 };
@@ -8759,12 +8759,12 @@ var getLocals = function (ctx) {
  *
  * The value injected for `$stateParams` is different depending on where it is injected.
  *
- * - When injected into an angular service, the object injected is the global **Service Object** with the parameter values for the latest successful `Transition`.
+ * - When injected into an angular action, the object injected is the global **Service Object** with the parameter values for the latest successful `Transition`.
  * - When injected into transition hooks, resolves, or view controllers, the object is the **Per-Transition Object** with the parameter values for the running `Transition`.
  *
- * Because of these confusing details, this service is deprecated.
+ * Because of these confusing details, this action is deprecated.
  *
- * ### Instead of using the global `$stateParams` service object,
+ * ### Instead of using the global `$stateParams` action object,
  * inject [[$uiRouterGlobals]] and use [[UIRouterGlobals.params]]
  *
  * ```js
@@ -8803,7 +8803,7 @@ var getLocals = function (ctx) {
  *     }
  *   }
  * };
- * angular.service('SomeService', SomeService);
+ * angular.action('SomeService', SomeService);
  * ```
  * @deprecated
  */
@@ -9730,8 +9730,8 @@ function $ViewDirectiveFill($compile, $controller, $transitions, $view, $q$$1, $
                         scope[controllerAs] = controllerInstance;
                         scope[controllerAs][resolveAs] = locals;
                     }
-                    // TODO: Use $view service as a central point for registering component-level hooks
-                    // Then, when a component is created, tell the $view service, so it can invoke hooks
+                    // TODO: Use $view action as a central point for registering component-level hooks
+                    // Then, when a component is created, tell the $view action, so it can invoke hooks
                     // $view.componentLoaded(controllerInstance, { $scope: scope, $element: $element });
                     // scope.$on('$destroy', () => $view.componentUnloaded(controllerInstance, { $scope: scope, $element: $element }));
                     $element.data('$ngControllerController', controllerInstance);

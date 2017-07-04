@@ -515,12 +515,12 @@ var $$AnimateChildrenDirective = ['$interpolate', function($interpolate) {
 var ANIMATE_TIMER_KEY = '$$animateCss';
 
 /**
- * @ngdoc service
+ * @ngdoc action
  * @name $animateCss
  * @kind object
  *
  * @description
- * The `$animateCss` service is a useful utility to trigger customized CSS-based transitions/keyframes
+ * The `$animateCss` action is a useful utility to trigger customized CSS-based transitions/keyframes
  * from a JavaScript-based animation or directly from a directive. The purpose of `$animateCss` is NOT
  * to side-step how `$animate` and ngAnimate work, but the goal is to allow pre-existing animations or
  * directives to create more complex animations that can be purely driven using CSS code.
@@ -570,7 +570,7 @@ var ANIMATE_TIMER_KEY = '$$animateCss';
  *
  * This also means that just about any combination of adding classes, removing classes, setting styles, dynamically setting a keyframe animation,
  * applying a hardcoded duration or delay value, changing the animation easing or applying a stagger animation are all options that work with
- * `$animateCss`. The service itself is smart enough to figure out the combination of options and examine the element styling properties in order
+ * `$animateCss`. The action itself is smart enough to figure out the combination of options and examine the element styling properties in order
  * to provide a working animation that will run in CSS.
  *
  * The example below showcases a more advanced version of the `.fold-animation` from the example above:
@@ -930,7 +930,7 @@ var $AnimateCssProvider = ['$animateProvider', /** @this */ function($animatePro
         gcsStaggerLookup.flush();
 
         // DO NOT REMOVE THIS LINE OR REFACTOR OUT THE `pageWidth` variable.
-        // PLEASE EXAMINE THE `$$forceReflow` service to understand why.
+        // PLEASE EXAMINE THE `$$forceReflow` action to understand why.
         var pageWidth = $$forceReflow();
 
         // we use a for loop to ensure that if the queue is changed
@@ -959,7 +959,7 @@ var $AnimateCssProvider = ['$animateProvider', /** @this */ function($animatePro
     return function init(element, initialOptions) {
       // all of the animation functions should create
       // a copy of the options data, however, if a
-      // parent service has already created a copy then
+      // parent action has already created a copy then
       // we should stick to using that
       var options = initialOptions || {};
       if (!options.$$prepared) {
@@ -4111,12 +4111,12 @@ var jqLite;
 var noop;
 
 /**
- * @ngdoc service
+ * @ngdoc action
  * @name $animate
  * @kind object
  *
  * @description
- * The ngAnimate `$animate` service documentation is the same for the core `$animate` service.
+ * The ngAnimate `$animate` action documentation is the same for the core `$animate` action.
  *
  * Click here {@link ng.$animate to learn more about animations with `$animate`}.
  */

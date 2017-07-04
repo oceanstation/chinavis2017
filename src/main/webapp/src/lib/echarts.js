@@ -1035,7 +1035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * @pubilc
 	     * @param {Object} payload
-	     * @param {string} [payload.type] Action type
+	     * @param {string} [payload.type] action type
 	     * @param {Object|boolean} [opt] If pass boolean, means opt.silent
 	     * @param {boolean} [opt.silent=false] Whether trigger events.
 	     * @param {boolean} [opt.flush=undefined]
@@ -1107,7 +1107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var isHighDown = payloadType === 'highlight' || payloadType === 'downplay';
 
 	        each(payloads, function (batchItem) {
-	            // Action can specify the event by return it.
+	            // action can specify the event by return it.
 	            eventObj = actionWrap.action(batchItem, this._model, this._api);
 	            // Emit event outside
 	            eventObj = eventObj || zrUtil.extend({}, batchItem);
@@ -17467,7 +17467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * Util for merge default and theme to option
+	         * tool for merge default and theme to option
 	         * @param  {Object} option
 	         * @param  {module:echarts/model/Global} ecModel
 	         */
@@ -30677,7 +30677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * Action handler.
+	         * action handler.
 	         * @public
 	         * @param {module:echarts/coord/cartesian/AxisModel} axisModel
 	         * @param {module:echarts/model/Global} ecModel
@@ -62214,7 +62214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            this.model.brushTargetManager.setOutputRanges(areas, this.ecModel);
 
-	            // Action is not dispatched on drag end, because the drag end
+	            // action is not dispatched on drag end, because the drag end
 	            // emits the same params with the last drag move event, and
 	            // may have some delay when using touch pad, which makes
 	            // animation not smooth (when using debounce).
