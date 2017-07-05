@@ -1,0 +1,40 @@
+CREATE DATABASE chinavis2017 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+create table chinavis2017.tab2
+(
+	id int(4) auto_increment primary key,
+	md5 varchar(32) null,
+	content varchar(300) null,
+	phone tinytext null,
+	conntime int null,
+	recitime int null,
+	lng decimal(12,8) null,
+	lat decimal(12,8) null,
+	type int(4) null
+);
+
+create table chinavis2017.tab3
+(
+	id int(4) auto_increment primary key,
+	md5 varchar(32) null,
+	content varchar(300) null,
+	phone tinytext null,
+	conntime int null,
+	recitime int null,
+	lng decimal(12,8) null,
+	lat decimal(12,8) null,
+	type int(4) null
+);
+
+create table chinavis2017.tab4
+(
+	id int(4) auto_increment primary key,
+	md5 varchar(32) null,
+	content varchar(300) null,
+	phone tinytext null,
+	conntime int null,
+	recitime int null,
+	lng decimal(12,8) null,
+	lat decimal(12,8) null,
+	type int(4) null
+);
