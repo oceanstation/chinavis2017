@@ -11,7 +11,7 @@ angular.module('chinavis')
                 var title = ['各时间段伪基站活跃情况', '各类短信数量对比'];
 
                 var chart = element.find('div')[0];
-                chart.style.height = '249px';
+                chart.style.height = '230px';
                 chart.style.width = '100%';
 
                 var Chart = echarts.init(chart);

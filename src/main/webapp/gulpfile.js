@@ -15,14 +15,14 @@ var Dest = './dist';
 var Build = {
     js: [
         './src/app.config.js',
-        './src/action/*.js',
+        './src/service/*.js',
         './src/Situation/controller.js',
         './src/Situation/*.directive.js',
         './src/Analysis/controller.js',
         './src/Analysis/*.directive.js'
     ],
     less: './src/**/*.less',
-    others: ['./src/**/*.html', './src/**/*.png', './src/**/*.min.js', './src/*/*.json']
+    others: ['./src/**/*.html', './src/**/*.png', './src/**/*.min.js', './src/*/*.json', './src/**/web.xml']
 };
 
 gulp.task('build', function () {

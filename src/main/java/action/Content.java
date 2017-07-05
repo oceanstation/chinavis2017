@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class Content extends ActionSupport {
     private InputStream inputStream;
-    private String startTime;// timestamp
-    private String endTime;// timestamp
+    private int startTime;// timestamp
+    private int endTime;// timestamp
     private String phone;// phone
     private int type;// timestamp
 
@@ -34,19 +34,19 @@ public class Content extends ActionSupport {
         this.inputStream = inputStream;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
@@ -78,48 +78,48 @@ public class Content extends ActionSupport {
 
         if (type >= 0) {
             if (phone == null) {
-                if (startTime.compareTo("1488297600000") < 0) {
-                    // 1488297600000 对应 2017/3/1 0:0:0
+                if (startTime < 1488297600) {
+                    // 1488297600 对应 2017/3/1 0:0:0
                     listMap = session.createQuery("select content, count(*) from Tab2 where recitime > :startTime and recitime<= :endTime and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("type", type)
                             .list();
-                } else if (startTime.compareTo("1490976000000") >= 0) {
-                    // 1490976000000 对应 2017/4/1 0:0:0
+                } else if (startTime >= 1490976000) {
+                    // 1490976000 对应 2017/4/1 0:0:0
                     listMap = session.createQuery("select content, count(*) from Tab4 where recitime > :startTime and recitime<= :endTime and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("type", type)
                             .list();
                 } else {
                     listMap = session.createQuery("select content, count(*) from Tab3 where recitime > :startTime and recitime<= :endTime and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("type", type)
                             .list();
                 }
             } else {
-                if (startTime.compareTo("1488297600000") < 0) {
-                    // 1488297600000 对应 2017/3/1 0:0:0
+                if (startTime < 1488297600) {
+                    // 1488297600 对应 2017/3/1 0:0:0
                     listMap = session.createQuery("select content, count(*) from Tab2 where recitime > :startTime and recitime<= :endTime and phone =:phone and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("phone", phone)
                             .setParameter("type", type)
                             .list();
-                } else if (startTime.compareTo("1490976000000") >= 0) {
-                    // 1490976000000 对应 2017/4/1 0:0:0
+                } else if (startTime >= 1490976000) {
+                    // 1490976000 对应 2017/4/1 0:0:0
                     listMap = session.createQuery("select content, count(*) from Tab4 where recitime > :startTime and recitime<= :endTime and phone =:phone and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("phone", phone)
                             .setParameter("type", type)
                             .list();
                 } else {
                     listMap = session.createQuery("select content, count(*) from Tab3 where recitime > :startTime and recitime<= :endTime and phone =:phone and type = :type group by content")
-                            .setParameter("startTime", startTime)
-                            .setParameter("endTime", endTime)
+                            .setParameter("startTime", Integer.toString(startTime))
+                            .setParameter("endTime", Integer.toString(endTime))
                             .setParameter("phone", phone)
                             .setParameter("type", type)
                             .list();
@@ -134,24 +134,24 @@ public class Content extends ActionSupport {
                 box.add(cop);
             }
         } else {
-            if (startTime.compareTo("1488297600000") < 0) {
-                // 1488297600000 对应 2017/3/1 0:0:0
+            if (startTime < 1488297600) {
+                // 1488297600 对应 2017/3/1 0:0:0
                 listMap = session.createQuery("select content, count(*), type from Tab2 where recitime > :startTime and recitime<= :endTime and phone =:phone group by content")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setParameter("phone", phone)
                         .list();
-            } else if (startTime.compareTo("1490976000000") >= 0) {
-                // 1490976000000 对应 2017/4/1 0:0:0
+            } else if (startTime >= 1490976000) {
+                // 1490976000 对应 2017/4/1 0:0:0
                 listMap = session.createQuery("select content, count(*), type from Tab4 where recitime > :startTime and recitime<= :endTime and phone =:phone group by content")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setParameter("phone", phone)
                         .list();
             } else {
                 listMap = session.createQuery("select content, count(*), type from Tab3 where recitime > :startTime and recitime<= :endTime and phone =:phone group by content")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setParameter("phone", phone)
                         .list();
             }

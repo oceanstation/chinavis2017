@@ -18,8 +18,7 @@ angular.module('chinavis')
                 });
 
                 var chart = element.find('div')[0];
-                chart.style.marginTop = '20px';
-                chart.style.height = '500px';
+                chart.style.height = '490px';
                 chart.style.width = '100%';
 
                 var Chart = echarts.init(chart);

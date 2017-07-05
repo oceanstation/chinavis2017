@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,8 +23,8 @@ import java.util.List;
  */
 public class Position extends ActionSupport {
     private InputStream inputStream;
-    private String startTime;// timestamp
-    private String endTime;// timestamp
+    private int startTime;// timestamp
+    private int endTime;// timestamp
     private int type;// 枚举类型
 
     public InputStream getInputStream() {
@@ -36,19 +35,19 @@ public class Position extends ActionSupport {
         this.inputStream = inputStream;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
@@ -60,15 +59,16 @@ public class Position extends ActionSupport {
         this.type = type;
     }
 
-    public String execute() throws IOException, ParseException {
+    public String execute() throws IOException {
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setHeader("Access-Control-Allow-Origin", "*");
 
         HibernateUtil util = HibernateUtil.getInstance();
         Session session = util.openSession();
 
-        Date stime = new Date(Long.parseLong(startTime));
-        Date etime = new Date(Long.parseLong(endTime));
+        // int整数相乘溢出
+        Date stime = new Date((long) startTime * 1000);
+        Date etime = new Date((long) endTime * 1000);
 
         List box = new ArrayList();
         List listMap;// 地图上的点
@@ -77,84 +77,84 @@ public class Position extends ActionSupport {
         int[] bars = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         if (type >= 0) {
-            if (startTime.compareTo("1488297600000") < 0) {
-                // 1488297600000 对应 2017/3/1 0:0:0
+            if (startTime < 1488297600) {
+                // 1488297600 对应 2017/3/1 0:0:0
                 listMap = session.createQuery("select content, lng, lat, type from Tab2 where recitime > :startTime and recitime<= :endTime and type= :type")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab2 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .setMaxResults(15)
                         .list();
 
-            } else if (startTime.compareTo("1490976000000") >= 0) {
-                // 1490976000000 对应 2017/4/1 0:0:0
+            } else if (startTime >= 1490976000) {
+                // 1490976000 对应 2017/4/1 0:0:0
                 listMap = session.createQuery("select content, lng, lat, type from Tab4 where recitime > :startTime and recitime<= :endTime and type= :type")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab4 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .setMaxResults(15)
                         .list();
             } else {
                 listMap = session.createQuery("select content, lng, lat, type from Tab3 where recitime > :startTime and recitime<= :endTime and type= :type")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab3 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
-                        .setParameter("type", type)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
+                        .setParameter("type", Integer.toString(type))
                         .setMaxResults(15)
                         .list();
             }
         } else {
-            if (startTime.compareTo("1488297600000") < 0) {
-                // 1488297600000 对应 2017/3/1 0:0:0
-                listMap = session.createQuery("select content, lng, lat, type from Tab2 where recitime > :startTime and recitime<= :endTime and type >= 0")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+            if (startTime < 1488297600) {
+                // 1488297600 对应 2017/3/1 0:0:0
+                listMap = session.createQuery("select content, lng, lat, type from Tab2 where recitime > :startTime and recitime <= :endTime and type >= 0")
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab2 where recitime > :startTime and recitime<= :endTime and type >= 0 group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setMaxResults(15)
                         .list();
 
-            } else if (startTime.compareTo("1490976000000") >= 0) {
-                // 1490976000000 对应 2017/4/1 0:0:0
+            } else if (startTime >= 1490976000) {
+                // 1490976000 对应 2017/4/1 0:0:0
                 listMap = session.createQuery("select content, lng, lat, type from Tab4 where recitime > :startTime and recitime<= :endTime and type >= 0")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab4 where recitime > :startTime and recitime<= :endTime and type >= 0 group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setMaxResults(15)
                         .list();
             } else {
                 listMap = session.createQuery("select content, lng, lat, type from Tab3 where recitime > :startTime and recitime<= :endTime and type >= 0")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab3 where recitime > :startTime and recitime<= :endTime and type >= 0 group by phone order by count(*) desc")
-                        .setParameter("startTime", startTime)
-                        .setParameter("endTime", endTime)
+                        .setParameter("startTime", Integer.toString(startTime))
+                        .setParameter("endTime", Integer.toString(endTime))
                         .setMaxResults(15)
                         .list();
             }

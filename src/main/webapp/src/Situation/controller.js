@@ -9,7 +9,7 @@ angular.module('chinavis')
 
         $scope.viewTime = '';// 回退时间
         $scope.currentTime = '2017-02-23 00:00:00';// 当前时间
-        localStorage.set('startTime', new Date($scope.currentTime).valueOf());// 转化为时间戳存储在localStorage
+        localStorage.set('startTime', (new Date($scope.currentTime).valueOf()) / 1000);// 转化为时间戳存储在localStorage
         $scope.timeRange = '';
 
         $scope.show = false;// 是否显示短信内容
@@ -312,8 +312,8 @@ angular.module('chinavis')
                 if (params.componentType === 'series') {
                     if (params.seriesType === 'pie') {
                         var params = {
-                            startTime: $scope.viewTime,
-                            endTime: $scope.viewTime + 1800000,
+                            startTime: ($scope.viewTime) / 1000,
+                            endTime: ($scope.viewTime + 1800000) / 1000,
                             type: $scope.types.indexOf($scope.selectedType) - 1,
                             phone: params.name
                         };
@@ -337,8 +337,8 @@ angular.module('chinavis')
                         });
 
                         var params = {
-                            startTime: $scope.viewTime,
-                            endTime: $scope.viewTime + 1800000,
+                            startTime: ($scope.viewTime) / 1000,
+                            endTime: ($scope.viewTime + 1800000) / 1000,
                             type: type
                         };
                         visService.getData('./api/content.action', params).then(
@@ -368,8 +368,8 @@ angular.module('chinavis')
                             $scope.records = [];
 
                             var params = {
-                                startTime: time.getTime() - 1800000,
-                                endTime: time.getTime(),
+                                startTime: (time.getTime() - 1800000) / 1000,
+                                endTime: (time.getTime()) / 1000,
                                 type: $scope.types.indexOf($scope.selectedType) - 1
                             };
                             visService.getData('./api/position.action', params).then(
@@ -408,8 +408,8 @@ angular.module('chinavis')
             $scope.start = function () {
                 $scope.intervalEvent = $interval(function () {
                     // 自定义时间
-                    if (localStorage.get('startTime') != new Date($scope.currentTime).valueOf()) {
-                        localStorage.set('startTime', new Date($scope.currentTime).valueOf());
+                    if (localStorage.get('startTime') != (new Date($scope.currentTime).valueOf()) / 1000) {
+                        localStorage.set('startTime', (new Date($scope.currentTime).valueOf()) / 1000);
                         // 清除下方时间线数据
                         $scope.areas = [];
                         areaStack.setOption({
@@ -427,8 +427,8 @@ angular.module('chinavis')
                     }
 
                     var params = {
-                        startTime: localStorage.get('startTime'),
-                        endTime: parseInt(localStorage.get('startTime')) + 1800000,
+                        startTime: parseInt(localStorage.get('startTime')),
+                        endTime: parseInt(localStorage.get('startTime')) + 1800,
                         type: $scope.types.indexOf($scope.selectedType) - 1
                     };
                     visService.getData('./api/position.action', params).then(
@@ -477,12 +477,12 @@ angular.module('chinavis')
                         });
 
                     // 重置content数据
-                    $scope.viewTime = parseInt(localStorage.get('startTime'));
+                    $scope.viewTime = parseInt(localStorage.get('startTime') * 1000);
                     $scope.show = false;
                     $scope.records = [];
 
-                    localStorage.set('startTime', parseInt(localStorage.get('startTime')) + 1800000);
-                    $scope.currentTime = $filter('date')(localStorage.get('startTime'), 'yyyy-MM-dd HH:mm:ss');
+                    localStorage.set('startTime', parseInt(localStorage.get('startTime')) + 1800);
+                    $scope.currentTime = $filter('date')(localStorage.get('startTime') + '000', 'yyyy-MM-dd HH:mm:ss');
 
                 }, 10000);
             };

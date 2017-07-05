@@ -4,20 +4,20 @@ package model;
  * Created by OCEAN on 2017/5/20.
  */
 public class Tab2 implements java.io.Serializable {
-    private Integer id;
+    private int id;
     private String md5;
     private String content;
     private String phone;
-    private String connectime;
-    private String recitime;
+    private int connectime;
+    private int recitime;
     private float lng;
     private float lat;
-    private Integer type;
+    private int type;
 
     public Tab2() {
     }
 
-    public Tab2(int id, String md5, String content, String phone, String connectime, String recitime, float lng, float lat, int type) {
+    public Tab2(int id, String md5, String content, String phone, int connectime, int recitime, float lng, float lat, int type) {
         this.id = id;
         this.md5 = md5;
         this.content = content;
@@ -29,11 +29,11 @@ public class Tab2 implements java.io.Serializable {
         this.type = type;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,19 +61,19 @@ public class Tab2 implements java.io.Serializable {
         this.phone = phone;
     }
 
-    public String getConnectime() {
+    public int getConnectime() {
         return connectime;
     }
 
-    public void setConnectime(String connectime) {
+    public void setConnectime(int connectime) {
         this.connectime = connectime;
     }
 
-    public String getRecitime() {
+    public int getRecitime() {
         return recitime;
     }
 
-    public void setRecitime(String recitime) {
+    public void setRecitime(int recitime) {
         this.recitime = recitime;
     }
 
@@ -93,11 +93,11 @@ public class Tab2 implements java.io.Serializable {
         this.lat = lat;
     }
 
-    public Integer getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(int type) {
         this.type = type;
     }
 }
