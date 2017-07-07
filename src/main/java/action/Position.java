@@ -87,13 +87,13 @@ public class Position extends ActionSupport {
                 listMap = session.createQuery("select content, lng, lat, type from Tab2 where recitime > :startTime and recitime<= :endTime and type= :type")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab2 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .setMaxResults(15)
                         .list();
 
@@ -102,26 +102,26 @@ public class Position extends ActionSupport {
                 listMap = session.createQuery("select content, lng, lat, type from Tab4 where recitime > :startTime and recitime<= :endTime and type= :type")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab4 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .setMaxResults(15)
                         .list();
             } else {
                 listMap = session.createQuery("select content, lng, lat, type from Tab3 where recitime > :startTime and recitime<= :endTime and type= :type")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .list();
 
                 listPhone = session.createQuery("select phone, count(*) from Tab3 where recitime > :startTime and recitime<= :endTime and type= :type group by phone order by count(*) desc")
                         .setParameter("startTime", Integer.toString(startTime))
                         .setParameter("endTime", Integer.toString(endTime))
-                        .setParameter("type", Integer.toString(type))
+                        .setParameter("type", type)
                         .setMaxResults(15)
                         .list();
             }
