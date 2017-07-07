@@ -9,7 +9,7 @@
 ## 技术栈
 >前端 Gulp + Angularjs + Amap + Echarts
 
->后端 Maven + Struts2 + Hibernate
+>后端 Maven + Tomcat + Struts2 + Hibernate
 ## 目录结构
     chinavis2017/
         ├── doc/
@@ -46,6 +46,8 @@
         │   │       │   │    ├── situation.html         对应静态页面
         │   │       │   │    ├── situation.less         对应样式表
         │   │       │   │    └── controller.js          对应controller
+        │   │       │   ├── config.js                   路由等设置
+        │   │       │   ├── common.less                 全局样式
         │   │       │   └── etc 
         │   │       ├── node_modules/                   自动生成，包含开发依赖
         │   │       ├── gulpfile.js                     gulp配置文件
@@ -56,3 +58,5 @@
 ![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_0.png)
 
 ![Preview_1](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_1.png)
+
+![Preview_2](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_2.png)
