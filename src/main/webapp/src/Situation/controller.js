@@ -511,14 +511,14 @@ angular.module('chinavis')
                 }, 10000);
             };
 
-            $scope.flag = '';
+            $scope.flag = '开始';
             $scope.stop = function (flag) {
-                if (flag === 'Pause') {
+                if (flag === '暂停') {
                     $interval.cancel($scope.intervalEvent);
-                    $scope.flag = 'Start';
+                    $scope.flag = '开始';
                 } else {
                     $scope.start(localStorage.get('startTime'));
-                    $scope.flag = 'Pause';
+                    $scope.flag = '暂停';
 
                     // 重置content数据
                     $scope.show = false;

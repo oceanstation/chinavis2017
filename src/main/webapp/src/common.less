@@ -1,33 +1,26 @@
-body, html, .my-view {
-  margin: 0;
-  font-size: 12px;
-  color: #f0f8ff;
+@frontColor: #f0f8ff;
+@backColor: #141d27;
+@border: 1px solid #ffffff;
+@fontSize: 12px;
+
+body, html {
   width: 100%;
   height: 100%;
+  background: url("image/bg.png") no-repeat center;
+  margin: 0;
+  font-size: @fontSize;
+  color: @frontColor;
+}
+
+a {
+  color: @frontColor;
+  text-decoration: none;
 }
 
 .my-view {
   width: 100%;
   height: 100%;
-  background: url("image/bg.png") no-repeat center;
   overflow-x: hidden;
-}
-
-a {
-  color: #f0f8ff;
-  text-decoration: none;
-}
-
-select {
-  width: 66px;
-  height: 19px;
-  padding-left: 3px;
-  border: 1px solid #ffffff;
-  border-radius: 0 !important;
-  background: none;
-  outline: none;
-  -webkit-appearance: none;
-  color: #ffffff;
 }
 
 .left65 {
@@ -42,24 +35,24 @@ select {
 
 .btn {
   width: 40px;
-  height: 15px;
-  line-height: 15px;
-  border: 1px solid #ffffff;
-  text-align: center;
-  margin: 5px 1px;
+  height: 19px;
+  border: @border;
+  margin: 0 1px;
   padding: 0 3px;
+  line-height: 19px;
+  text-align: center;
 }
 
 .btnActive {
   width: 40px;
-  height: 15px;
-  line-height: 15px;
-  border: 1px solid #ffffff;
-  background: #ffffff;
-  color: black;
-  text-align: center;
-  margin: 5px 1px;
+  height: 19px;
+  border: @border;
+  background: @frontColor;
+  margin: 0 1px;
   padding: 0 3px;
+  color: black;
+  line-height: 19px;
+  text-align: center;
 }
 
 .nav {
@@ -72,16 +65,16 @@ select {
     display: block;
     width: 50px;
     height: 15px;
-    line-height: 15px;
+    border: @border;
     float: left;
     margin-right: 5px;
-    border: 1px solid #ffffff;
+    line-height: 15px;
     text-align: center;
   }
 
   .active {
-    background: #ffffff;
-    color: #000000;
+    background: @frontColor;
+    color: @backColor;
   }
 }
 

@@ -14,7 +14,7 @@ var Dest = './dist';
 
 var Build = {
     js: [
-        './src/app.config.js',
+        './src/config.js',
         './src/service/*.js',
         './src/Situation/controller.js',
         './src/Situation/*.directive.js',
