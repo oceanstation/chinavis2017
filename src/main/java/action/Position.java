@@ -1,17 +1,18 @@
 package action;
 
-import tool.HibernateUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opensymphony.xwork2.ActionSupport;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
+import tool.HibernateUtil;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import java.util.List;
  * 根据startTime、endTime和type来查询数据
  */
 public class Position extends ActionSupport {
+    private static Logger log = LogManager.getLogger();
+
     private InputStream inputStream;
     private int startTime;// timestamp
     private int endTime;// timestamp
@@ -59,7 +62,9 @@ public class Position extends ActionSupport {
         this.type = type;
     }
 
-    public String execute() throws IOException {
+    @Override
+    public String execute() {
+        // 跨域请求
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -196,11 +201,20 @@ public class Position extends ActionSupport {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        String res = mapper.writeValueAsString(json);
+        String res = null;
+        try {
+            res = mapper.writeValueAsString(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
-        inputStream = new ByteArrayInputStream(res.getBytes("UTF-8"));
+        try {
+            inputStream = new ByteArrayInputStream(res.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        System.out.println(res);
+        log.info(res);
 
         return SUCCESS;
     }
