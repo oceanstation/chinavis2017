@@ -26,10 +26,8 @@
         │   │   │   ├── log4j2.xml
         │   │   │   ├── struts.xml
         │   │   │   └── hbm/
-        │   │   └── webapp/                             前端开发目录
-        │   │       ├── dist/                           代码产出目录
-        │   │       │   ├── WEB-INF/
-        │   │       │   └── etc
+        │   │   ├── webapp/                             代码产出目录
+        │   │   └── webdev/                             前端开发目录
         │   │       ├── src/                            开发目录
         │   │       │   ├── service/                    封装的service
         │   │       │   │    ├── base.xhr.js            接口

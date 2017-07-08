@@ -8,7 +8,7 @@ angular.module('chinavis')
         });
         $scope.selectedType = $scope.types[0];// 当前所选分类
 
-        $scope.currentTime = '2017-02-24 00:00:00';// 当前时间
+        $scope.currentTime = '2017-02-24 10:00:00';// 当前时间
         $scope.viewTime = new Date($scope.currentTime).valueOf() - 1800000;// 回退时间
         localStorage.set('startTime', (new Date($scope.currentTime).valueOf()) / 1000);// 转化为时间戳存储在localStorage
         $scope.timeRange = '';

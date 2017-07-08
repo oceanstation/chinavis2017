@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     proxy = require('http-proxy-middleware');
 
 var Src = './src';
-var Dest = './dist';
+var Dest = '../webapp';
 
 var Build = {
     js: [
@@ -22,7 +22,7 @@ var Build = {
         './src/Analysis/*.directive.js'
     ],
     less: './src/**/*.less',
-    others: ['./src/**/*.html', './src/**/*.png', './src/**/*.min.js', './src/*/*.json', './src/**/web.xml']
+    others: ['./src/**/*.html', './src/**/*.png', './src/**/*.min.js', './src/*/*.json', './src/**/web.xml', './src/favicon.ico']
 };
 
 gulp.task('build', function () {
@@ -44,7 +44,7 @@ gulp.task('build', function () {
 
 gulp.task('connect', function () {
     connect.server({
-        root: ['./'],
+        root: ['./src'],
         port: 8000,
         livereload: true,
         middleware: function (connect, opt) {
