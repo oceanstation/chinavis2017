@@ -334,7 +334,7 @@ angular.module('chinavis')
                                     type: $scope.types.indexOf($scope.selectedType) - 1,
                                     phone: params.name
                                 };
-                                visService.getData('./api/content.action', para).then(
+                                visService.getData('./api/content', para).then(
                                     function (data) {
                                         $scope.records = data;
                                         $scope.show = true;
@@ -358,7 +358,7 @@ angular.module('chinavis')
                                     endTime: ($scope.viewTime + 1800000) / 1000,
                                     type: type
                                 };
-                                visService.getData('./api/content.action', para).then(
+                                visService.getData('./api/content', para).then(
                                     function (data) {
                                         $scope.records = data;
                                         $scope.show = true;
@@ -389,7 +389,7 @@ angular.module('chinavis')
                                         endTime: (time.getTime()) / 1000,
                                         type: $scope.types.indexOf($scope.selectedType) - 1
                                     };
-                                    visService.getData('./api/position.action', para).then(
+                                    visService.getData('./api/position', para).then(
                                         function (data) {
                                             // 更新地图数据
                                             pointSimplifierIns.setData(data.maps);
@@ -453,7 +453,7 @@ angular.module('chinavis')
                         endTime: parseInt(localStorage.get('startTime')) + 1800,
                         type: $scope.types.indexOf($scope.selectedType) - 1
                     };
-                    visService.getData('./api/position.action', para).then(
+                    visService.getData('./api/position', para).then(
                         function (data) {
                             // 更新地图数据
                             pointSimplifierIns.setData(data.maps);
