@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zh.dao.IContent">
+
+    <select id="getContentsByPhoneType" resultType="zh.pojo.Content">
+        SELECT content, count(*) as num, type
+        FROM tab2
+        WHERE recitime <![CDATA[>]]> #{startTime}
+        AND recitime<![CDATA[<=]]> #{endTime}
+        AND type = #{type}
+        AND phone = #{phone}
+        GROUP BY content
+        ORDER BY num DESC
+    </select>
+
+    <select id="getContentsByPhone" resultType="zh.pojo.Content">
+        SELECT content, count(*) as num, type
+        FROM tab2
+        WHERE recitime <![CDATA[>]]> #{startTime}
+        AND recitime<![CDATA[<=]]> #{endTime}
+        AND type <![CDATA[>=]]> 0
+        AND phone = #{phone}
+        GROUP BY content
+        ORDER BY num DESC
+    </select>
+
+    <select id="getContentsByType" resultType="zh.pojo.Content">
+        SELECT content, count(*) as num, type
+        FROM tab2
+        WHERE recitime <![CDATA[>]]> #{startTime}
+        AND recitime<![CDATA[<=]]> #{endTime}
+        AND type = #{type}
+        GROUP BY content
+        ORDER BY num DESC
+    </select>
+
+    <select id="getContents" resultType="zh.pojo.Content">
+        SELECT content, count(*) as num, type
+        FROM tab2
+        WHERE recitime <![CDATA[>]]> #{startTime}
+        AND recitime <![CDATA[<=]]> #{endTime}
+        AND type <![CDATA[>=]]> 0
+        GROUP BY content
+        ORDER BY num DESC
+    </select>
+</mapper>
