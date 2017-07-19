@@ -9,7 +9,7 @@
 ## 技术栈
 >前端 Gulp + Angularjs + Amap + Echarts
 
->后端 Maven + Tomcat + Struts2 + Hibernate
+>后端 Maven + Tomcat + Spring + SpringMVC + MyBatis
 ## 目录结构
     chinavis2017/
         ├── doc/
@@ -17,15 +17,17 @@
         ├── src/
         │   ├── main/
         │   │   ├── java/
-        │   │   │   ├── action/
-        │   │   │   ├── model/
-        │   │   │   └── tool/
+        │   │   │   └── zh/
+        │   │   │       ├── controller/
+        │   │   │       ├── dao/
+        │   │   │       ├── pojo/
+        │   │   │       └── service/
         │   │   ├── resources/
-        │   │   │   ├── hibernate.cfg.xml
-        │   │   │   ├── hibernate.reveng.xml
-        │   │   │   ├── log4j2.xml
-        │   │   │   ├── struts.xml
-        │   │   │   └── hbm/
+        │   │   │   ├── mapping/
+        │   │   │   ├── jdbc.properties
+        │   │   │   ├── log4j.properties
+        │   │   │   ├── spring-mvc.xml
+        │   │   │   └── spring-mybatis.xml
         │   │   ├── webapp/                             代码产出目录
         │   │   └── webdev/                             前端开发目录
         │   │       ├── src/                            开发目录
