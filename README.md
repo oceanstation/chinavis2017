@@ -5,9 +5,9 @@
 主要是从伪基站的时间和空间、垃圾短信的分类三个维度来综合分析，
 揭示伪站的行为模式，协助有关部门打击伪基站。
 
-> 线上预览: [地址](http://59.110.139.197:8080/chinavis/#!/ "伪基站时空特征")
+> 线上预览: [地址](http://59.110.139.197/chinavis/#!/ "伪基站时空特征")
 ## 技术栈
->前端 Gulp + Angularjs + Amap + Echarts
+>前端 Npm + Gulp + Angularjs + Amap + Echarts
 
 >后端 Maven + Tomcat + Spring + SpringMVC + MyBatis
 ## 目录结构
@@ -53,7 +53,7 @@
         │   │       ├── gulpfile.js                     gulp配置文件
         │   │       └── package.json
         │   └── test/
-        └── etc
+        └── pom.xml
 ## 系统截图
 ![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_0.png)
 
