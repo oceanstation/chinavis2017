@@ -8,57 +8,28 @@
 #time {
   position: absolute;
   top: 30px;
-  left: 44%;
-  z-index: 10000;
-  box-sizing:border-box;
-
-  select {
-    width: 70px;
-    height: 18px;
-    border: @border;
-    border-radius: 0 !important;
-    background: none;
-    outline: none;
-    -webkit-appearance: none;
-    padding: 0 3px;
-    color: @frontColor;
-    font-size: @fontSize;
-  }
-
-  option {
-    background: @backColor;
-  }
-
-  .timeInput {
-    box-sizing:border-box;
-    height: 19px;
-    border: none;
-    background: none;
-    color: @frontColor;
-    font-size: @fontSize;
-  }
-
-  p {
-    margin: 5px 0;
-  }
-}
-
-#legendPhone {
-  position: absolute;
-  top: 30px;
-  left: 0;
-  width: 350px;
-  height: 200px;
-  z-index: 10000;
+  width: 60%;
+  margin: 0 20%;
+  z-index: 100;
+  text-align: center;
 }
 
 #legendType {
   position: absolute;
-  top: 250px;
+  top: 100px;
   left: 10px;
-  width: 200px;
-  height: 230px;
-  z-index: 10000;
+  width: 100px;
+  height: 350px;
+  z-index: 100;
+
+  ul {
+    padding-left: 20px;
+
+    li {
+      cursor: pointer;
+      line-height: 13px;
+    }
+  }
 }
 
 #content {
@@ -68,7 +39,7 @@
   width: 70%;
   height: 500px;
   padding-left: 5px;
-  z-index: 10000;
+  z-index: 100;
   overflow-y: auto;
 
   p {
@@ -86,8 +57,9 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 150px;
-  z-index: 10000
+  height: 100px;
+  z-index: 100;
+  text-align: center;
 }
 
 .amap-logo {

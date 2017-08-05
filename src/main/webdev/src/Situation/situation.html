@@ -1,12 +1,23 @@
-<div id="container"></div><!-- 高德地图 -->
+<!-- 高德地图 -->
+<div id="container"></div>
+
+<!-- 开始按钮/当前时间 -->
 <div id="time">
-    <select ng-model="selectedType" ng-options="item for item in types"></select>
     <span ng-click="stop(flag)" ng-class="flag === '开始' ? 'btnActive mouse' : 'btn mouse'">{{flag}}</span>
     <p ng-bind="timeRange"></p>
-    下一时间：<input class="timeInput" ng-model="currentTime">
 </div>
-<div id="legendPhone"></div>
-<div id="legendType"></div>
+
+<!-- 图例 -->
+<div id="legendType">
+    <ul ng-repeat="item in colorMap">
+        <li ng-style="{'color':'{{item.color}}'}" ng-click="showContent(item.name)">{{item.name}}</li>
+    </ul>
+</div>
+
+<!-- 底部折线图 -->
+<div id="area-stack"></div>
+
+<!-- 短信内容 -->
 <div id="content" ng-if="show">
     <p ng-click="close()" class="mouse">Close </p>
     <p class="item" ng-repeat="item in records">
@@ -14,4 +25,3 @@
         <span ng-style="{'color':'{{(colorMap[item.type]).color}}'}">{{item.content}}</span>
     </p>
 </div>
-<div id="area-stack"></div><!-- 底部折线图 -->

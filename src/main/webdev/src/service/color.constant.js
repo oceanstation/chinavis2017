@@ -1,7 +1,7 @@
 angular.module('chinavis')
     .constant('colorMap', [
         {
-            name: '小姐上门',
+            name: '上门服务',
             color: '#17becf'
         },
         {

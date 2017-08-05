@@ -7,7 +7,7 @@
 
 > 线上预览: [地址](http://59.110.139.197/chinavis/#!/ "伪基站时空特征")
 ## 技术栈
->前端 Npm + Gulp + Angularjs + Amap + Echarts
+>前端 Npm + Gulp + Angularjs + Amap + D3 + Echarts
 
 >后端 Maven + Tomcat + Spring + SpringMVC + MyBatis
 ## 目录结构
@@ -55,8 +55,8 @@
         │   └── test/
         └── pom.xml
 ## 系统截图
-![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_0.png)
+![Preview_0](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_0.png)
 
-![Preview_1](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_1.png)
+![Preview_1](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_1.png)
 
-![Preview_2](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_2.png)
+![Preview_2](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_2.png)
