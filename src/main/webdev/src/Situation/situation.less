@@ -76,3 +76,20 @@
   height: 30px;
   color: @frontColor;
 }
+
+#tooltip {
+  position: absolute;
+  width: 120px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #000000;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+#tooltip.hidden {
+  display: none;
+}

@@ -175,6 +175,22 @@ angular.module('chinavis')
                     // 初始化timeLine数据
                     $scope.areas = data.areas;
 
+                    // 显示tooltip
+                    $scope.showTooltip = function (left, top, text) {
+                        // 更新tooltip信息
+                        d3.select("#tooltip")
+                            .style("left", left + "px")
+                            .style("top", top + "px")
+                            .select("#value")
+                            .text(text);
+                        d3.select("#tooltip").classed("hidden", false);
+                    };
+
+                    // 隐藏tooltip
+                    $scope.hideTooltip = function () {
+                        d3.select("#tooltip").classed("hidden", true);
+                    };
+
                     xScale = d3.scale.ordinal()
                         .domain(d3.range(data.areas.length))
                         .rangeRoundBands([0, w], 0.05);
@@ -208,7 +224,19 @@ angular.module('chinavis')
                             return (i === 47) ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)";
                         })
                         .attr("cursor", "pointer")
-                        .on("mouseover", function () {
+                        .on("mouseover", function (d) {
+                            var left = d3.select(this).attr("x") - 35;
+                            // 修正x位置
+                            if (left < 0) {
+                                left = 20;
+                            } else if (left + 100 > getViewport.width) {
+                                left = parseFloat(getViewport.width - 130);
+                            }
+                            var top = d3.select(this).attr("y") - 30;
+
+                            // 显示tooltip
+                            $scope.showTooltip(left, top, $filter('date')(d.stime, 'M月d日HH:mm') + '-' + $filter('date')(d.etime, 'HH:mm'));
+
                             d3.select(this)
                                 .transition()
                                 .duration(100)
@@ -217,6 +245,9 @@ angular.module('chinavis')
                                 });
                         })
                         .on("mouseout", function () {
+                            // 隐藏tooltip
+                            $scope.hideTooltip();
+
                             d3.select(this)
                                 .transition()
                                 .duration(100)
@@ -238,13 +269,9 @@ angular.module('chinavis')
                                 .attr("fill", "rgba(255,255,255,0.9)");
 
                             $scope.showPoint(d.stime, d.etime);
-                        })
-                        .append("title")
-                        .text(function (d) {
-                            return $filter('date')(d.stime, 'M月d日HH:mm') + '-' + $filter('date')(d.etime, 'HH:mm');
                         });
 
-                    // 时间标签
+                    // 标签
                     timeLine.selectAll("text")
                         .data($scope.areas)
                         .enter()
