@@ -4,12 +4,13 @@
 >该系统是针对2017年中国可视化与可视分析大会的数据可视分析挑战赛的第一道题目而开发，
 主要是从伪基站的时间和空间、垃圾短信的分类三个维度来综合分析，
 揭示伪站的行为模式，协助有关部门打击伪基站。
+## 预览
+> 地址:[http://www.oceanvis.cn/chinavis/](http://www.oceanvis.cn/chinavis/ "伪基站时空特征")
 
-> 线上预览: [地址](http://59.110.139.197/chinavis-dev/#!/ "伪基站时空特征")
 ## 技术栈
 >前端 Npm + Gulp + Angularjs + Amap + D3 + Echarts
 
->后端 Maven + Tomcat + Spring + SpringMVC + MyBatis
+>后端 Maven + Tomcat + SSM
 ## 目录结构
     chinavis2017/
         ├── doc/
@@ -55,8 +56,8 @@
         │   └── test/
         └── pom.xml
 ## 系统截图
-![Preview_0](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_0.png)
+![Preview_0](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_0.png)
 
-![Preview_1](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_1.png)
+![Preview_1](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_1.png)
 
-![Preview_2](https://github.com/oceanstation/chinavis2017/blob/dev/doc/Preview_2.png)
+![Preview_2](https://github.com/oceanstation/chinavis2017/blob/master/doc/Preview_2.png)
