@@ -24027,7 +24027,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Array}
 	         */
-	         // FIXME Situation when labels is on ticks
+	         // FIXME situation when labels is on ticks
 	        getBands: function () {
 	            var extent = this.getExtent();
 	            var bands = [];

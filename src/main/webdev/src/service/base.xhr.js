@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: xhr请求
+ */
+
 angular.module('chinavis')
     .service('visService', ['$http', '$q', function ($http, $q) {
         return {

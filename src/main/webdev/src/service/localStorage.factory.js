@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: 读写localStorage
+ */
+
 angular.module('chinavis')
     .factory('localStorage', ['$window', function ($window) {
         return {

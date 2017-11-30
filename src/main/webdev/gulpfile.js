@@ -6,40 +6,38 @@ var gulp = require('gulp'),
     less = require("gulp-less"),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
-    source = require('vinyl-source-stream'),
     proxy = require('http-proxy-middleware');
 
-var Src = './src';
-var Dest = '../webapp';
-
-var Build = {
+var DevFiles = {
     js: [
-        './src/config.js',
+        './src/config/*.config.js',
         './src/service/*.js',
-        './src/Situation/controller.js',
-        './src/Situation/*.directive.js',
-        './src/Analysis/controller.js',
-        './src/Analysis/*.directive.js'
+        './src/situation/controller.js',
+        './src/situation/*.directive.js',
+        './src/analysis/controller.js',
+        './src/analysis/*.directive.js'
     ],
-    less: './src/**/*.less',
-    others: ['./src/**/*.html', './src/**/*.png', './src/**/*.min.js', './src/*/*.json', './src/**/web.xml', './src/favicon.ico']
+    less: './src/**/*.less'
 };
 
-gulp.task('build', function () {
-    gulp.src(Build.js)
+gulp.task('js', function () {
+    gulp.src(DevFiles.js)
         .pipe(concat('app.min.js'))
         .pipe(ngAnnotate())
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
-        .pipe(gulp.dest(Dest));
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./src'))
+        .pipe(connect.reload());
+});
 
-    gulp.src(Build.less)
+gulp.task('less', function () {
+    gulp.src(DevFiles.less)
         .pipe(less())
         .pipe(concat('app.min.css'))
         .pipe(minifyCss())
-        .pipe(gulp.dest(Dest));
-
-    gulp.src(Build.others)
-        .pipe(gulp.dest(Dest));
+        .pipe(gulp.dest('./src'))
+        .pipe(connect.reload());
 });
 
 gulp.task('connect', function () {
@@ -58,29 +56,9 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('js', function () {
-    gulp.src(Build.js)
-        .pipe(concat('app.min.js'))
-        .pipe(ngAnnotate())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(Src))
-        .pipe(connect.reload());
-});
-
-gulp.task('less', function () {
-    gulp.src(Build.less)
-        .pipe(less())
-        .pipe(concat('app.min.css'))
-        .pipe(minifyCss())
-        .pipe(gulp.dest(Src))
-        .pipe(connect.reload());
-});
-
 gulp.task('watch', function () {
-    gulp.watch(Build.js, ['js']);
-    gulp.watch(Build.less, ['less']);
+    gulp.watch(DevFiles.js, ['js']);
+    gulp.watch(DevFiles.less, ['less']);
 });
 
 gulp.task('start', ['connect', 'watch']);

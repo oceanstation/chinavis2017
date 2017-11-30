@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: 分析模块
+ */
+
 angular.module('chinavis')
     .controller('analysisController', ['$scope', 'colorMap', 'visService', '$interval', '$filter', function ($scope, colorMap, visService, $interval, $filter) {
         $scope.months = [

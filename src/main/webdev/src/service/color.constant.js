@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: 常用颜色
+ */
+
 angular.module('chinavis')
     .constant('colorMap', [
         {

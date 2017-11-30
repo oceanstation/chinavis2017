@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: 态势模块
+ */
+
 angular.module('chinavis')
     .controller('situationController', ['$scope', 'localStorage', 'getViewport', 'colorMap', 'visService', '$interval', '$filter', function ($scope, localStorage, getViewport, colorMap, visService, $interval, $filter) {
         $scope.colorMap = colorMap;// 分类及对应颜色

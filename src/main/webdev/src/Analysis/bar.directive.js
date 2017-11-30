@@ -1,3 +1,9 @@
+/**
+ * Created: OCEAN on 2017/6/22
+ * Email: oceanstation@163.com
+ * Description: 直方图
+ */
+
 angular.module('chinavis')
     .directive('barChart', ['$filter', 'colorMap', function ($filter, colorMap) {
         return {
