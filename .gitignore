@@ -1,9 +1,19 @@
-chinavis2017.iml
+# Mac file
 .DS_Store
+
+# Idea file
+*.iml
 .idea
+
+# Java file
 /target
-/src/main/webapp
-/src/main/webdev/node_modules
-/src/main/webdev/npm-debug.log
+
+#JS file
+/src/main/webdev/src/app.min.js
+/src/main/webdev/src/app.min.js.map
+/src/main/webdev/src/app.min.css
 /src/main/webdev/src/default.html
 
+# Node
+/src/main/webdev/node_modules
+/src/main/webdev/npm-debug.log

@@ -1,9 +1,10 @@
 package zh.pojo;
 
 /**
- * Created by OCEAN on 2017/7/19.
+ * Created: OCEAN on 2017/7/19
+ * Email: oceanstation@163.com
+ * Description:
  */
-
 public class Content {
     private String content;
     private int num;

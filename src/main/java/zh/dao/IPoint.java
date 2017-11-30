@@ -7,9 +7,10 @@ import zh.pojo.Point;
 import java.util.List;
 
 /**
- * Created by OCEAN on 2017/7/19.
+ * Created: OCEAN on 2017/7/19
+ * Email: oceanstation@163.com
+ * Description:
  */
-
 @MapperScan
 public interface IPoint {
     List<Point> getPointsByType(@Param("startTime") int startTime, @Param("endTime") int endTime, @Param("type") int type);

@@ -15,9 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by OCEAN on 2017/7/18.
+ * Created: OCEAN on 2017/7/18
+ * Email: oceanstation@163.com
+ * Description:
  */
-
 @Service
 public class PointService {
 
@@ -28,32 +29,29 @@ public class PointService {
     IPhone phoneDao;
 
     private List<Point> getPointsList(int start, int end) {
-        List<Point> positions = pointDao.getPoints(start, end);
-        return positions;
+        return pointDao.getPoints(start, end);
     }
 
     private List<Point> getPointsByTypeList(int start, int end, int type) {
-        List<Point> positions = pointDao.getPointsByType(start, end, type);
-        return positions;
+        return pointDao.getPointsByType(start, end, type);
     }
 
     private List<Phone> getPhonesList(int start, int end) {
-        List<Phone> phones = phoneDao.getPhones(start, end);
-        return phones;
+        return phoneDao.getPhones(start, end);
     }
 
     private List<Phone> getPhonesByTypeList(int start, int end, int type) {
-        List<Phone> phones = phoneDao.getPhonesByType(start, end, type);
-        return phones;
+        return phoneDao.getPhonesByType(start, end, type);
     }
 
     public String getPoints(int start, int end, int type) {
+        int[] bars = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         List boxPoint = new ArrayList();
         List boxPhone = new ArrayList();
-        int[] bars = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
         List<Point> points;// 地图上的点
         List<Phone> phones;// 发送方号码
+        HashMap box = new HashMap();
+
         if (type >= 0) {
             points = getPointsByTypeList(start, end, type);
             phones = getPhonesByTypeList(start, end, type);
@@ -93,16 +91,15 @@ public class PointService {
         info.put("stime", stime);
         info.put("etime", etime);
 
-        HashMap json = new HashMap();
-        json.put("maps", boxPoint);
-        json.put("phone", boxPhone);
-        json.put("area", info);
-        json.put("bars", bars);
+        box.put("maps", boxPoint);
+        box.put("phone", boxPhone);
+        box.put("area", info);
+        box.put("bars", bars);
 
         ObjectMapper mapper = new ObjectMapper();
         String res = null;
         try {
-            res = mapper.writeValueAsString(json);
+            res = mapper.writeValueAsString(box);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

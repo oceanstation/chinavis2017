@@ -12,9 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by OCEAN on 2017/7/18.
+ * Created: OCEAN on 2017/7/18
+ * Email: oceanstation@163.com
+ * Description:
  */
-
 @Service
 public class ContentService {
 
@@ -22,28 +23,23 @@ public class ContentService {
     IContent contentDao;
 
     private List<Content> getContentsByPhoneTypeList(int start, int end, String phone, int type) {
-        List<Content> contents = contentDao.getContentsByPhoneType(start, end, phone, type);
-        return contents;
+        return contentDao.getContentsByPhoneType(start, end, phone, type);
     }
 
     private List<Content> getContentsByTypeList(int start, int end, int type) {
-        List<Content> contents = contentDao.getContentsByType(start, end, type);
-        return contents;
+        return contentDao.getContentsByType(start, end, type);
     }
 
     private List<Content> getContentsByPhoneList(int start, int end, String phone) {
-        List<Content> contents = contentDao.getContentsByPhone(start, end, phone);
-        return contents;
+        return contentDao.getContentsByPhone(start, end, phone);
     }
 
     private List<Content> getContentsList(int start, int end) {
-        List<Content> contents = contentDao.getContents(start, end);
-        return contents;
+        return contentDao.getContents(start, end);
     }
 
     public String getContents(int start, int end, String phone, int type) {
         List box = new ArrayList();
-
         List<Content> contents;// 发送方号码
 
         if (type >= 0) {

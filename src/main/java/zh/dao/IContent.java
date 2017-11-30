@@ -7,9 +7,10 @@ import zh.pojo.Content;
 import java.util.List;
 
 /**
- * Created by OCEAN on 2017/7/19.
+ * Created: OCEAN on 2017/7/19
+ * Email: oceanstation@163.com
+ * Description:
  */
-
 @MapperScan
 public interface IContent {
     List<Content> getContentsByPhoneType(@Param("startTime") int startTime, @Param("endTime") int endTime, @Param("phone") String phone, @Param("type") int type);
