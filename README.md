@@ -29,15 +29,16 @@
         │   │   │   ├── log4j.properties
         │   │   │   ├── spring-mvc.xml
         │   │   │   └── spring-mybatis.xml
-        │   │   ├── webapp/                             代码产出目录
+        │   │   ├── webapp/
         │   │   └── webdev/                             前端开发目录
         │   │       ├── src/                            开发目录
+        │   │       │   ├── config/                     配置信息
         │   │       │   ├── service/                    封装的service
         │   │       │   │    ├── base.xhr.js            接口
         │   │       │   │    └── color.constant.js      常量
         │   │       │   ├── lib/                        js库
         │   │       │   ├── image/                      图片
-        │   │       │   ├── data/                       数据
+        │   │       │   ├── data/                       预加载数据
         │   │       │   ├── Analysis/                   分析模块
         │   │       │   │    ├── analysis.html          对应静态页面
         │   │       │   │    ├── analysis.less          对应样式表
@@ -47,12 +48,11 @@
         │   │       │   │    ├── situation.html         对应静态页面
         │   │       │   │    ├── situation.less         对应样式表
         │   │       │   │    └── controller.js          对应controller
-        │   │       │   ├── config.js                   路由等设置
-        │   │       │   ├── common.less                 全局样式
-        │   │       │   └── etc 
-        │   │       ├── node_modules/                   自动生成，包含开发依赖
-        │   │       ├── gulpfile.js                     gulp配置文件
-        │   │       └── package.json
+        │   │       │   └── index.html                  主页 
+        │   │       ├── node_modules/                   开发依赖
+        │   │       ├── gulpfile.js                     gulp配置
+        │   │       ├── package.json
+        │   │       └── package-lock.json
         │   └── test/
         └── pom.xml
 ## 系统截图
