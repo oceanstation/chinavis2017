@@ -446,4 +446,12 @@ angular.module('chinavis')
                 }
             };
         });
+
+        // 路由变化时，取消定时器
+        $scope.$on("$destroy", function() {
+            if (angular.isDefined($scope.intervalEvent)) {
+            $interval.cancel($scope.intervalEvent);
+            $scope.intervalEvent = undefined;
+        }
+    });
     }]);
